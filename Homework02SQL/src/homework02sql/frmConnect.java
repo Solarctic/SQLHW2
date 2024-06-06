@@ -139,8 +139,7 @@ public class frmConnect extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "SQL Connected");
                 System.out.println("Connection successful");
                 new frmMain().setVisible(true);
-            } catch (SQLException ex) 
-            {                        
+            } catch (SQLException ex) {                        
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "SQL Connection Failed");
             return;
