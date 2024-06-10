@@ -39,10 +39,11 @@ public class frmCustomers extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
         try {
             Statement stmt = con.createStatement();
-            //change name of schema for your datbase
+            //change name of schema for your datbase,
             ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers;");
 
             while (rs.next()) {
+                //fetch data from sql datatable
                 String id = rs.getString("customer_id");
                 String first_Name = rs.getString("customer_first_name");
                 String last_Name = rs.getString("customer_last_name");
@@ -55,12 +56,15 @@ public class frmCustomers extends javax.swing.JFrame {
                 //add to table
                 tableModel.addRow(new Object[]{id, first_Name, last_Name,
                     address, city, state, zip, phone, fax});
+                //close statement on completion
+                stmt.close();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error in retrieving the data table");
+            JOptionPane.showMessageDialog(null, "Error: cannot retrieve the data table");
         }
     }
-
+    
+    //see frmMain for details
     public boolean isDbConnected(Connection con) {
         try {
             return con != null && !con.isClosed();
