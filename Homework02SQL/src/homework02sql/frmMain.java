@@ -12,20 +12,18 @@ import javax.swing.JOptionPane;
  *
  * @author SOL
  */
-
-
 public class frmMain extends javax.swing.JFrame {
 
     /**
      * Creates new form frmMain
      */
-    
     Connection con = null;
-    
-    public frmMain(Connection sqlcon) { 
+
+    public frmMain(Connection sqlcon, frmConnect pro) {
 
         initComponents();
         con = sqlcon;
+        //pro.setVisible(false);
         //sql checker see if the connection is passed properly
         boolean check = isDbConnected(con);
         System.out.println(check);
@@ -43,6 +41,7 @@ public class frmMain extends javax.swing.JFrame {
         btnCustomers = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Database Menu");
 
         btnCustomers.setText("Customers");
         btnCustomers.addActionListener(new java.awt.event.ActionListener() {
@@ -75,25 +74,24 @@ public class frmMain extends javax.swing.JFrame {
     private void btnCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersActionPerformed
         // TODO add your handling code here:
         boolean check = isDbConnected(con);
-        
-        if(!check)
-        {
+
+        if (!check) {
             JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
             return;
         }
         new frmCustomers(con).setVisible(true);
     }//GEN-LAST:event_btnCustomersActionPerformed
 
-    
     //code from internet modified to check connection just in case it doesnt pass
     public boolean isDbConnected(Connection con) {
-    try {
-        return con != null && !con.isClosed();
-    } catch (SQLException ignored) {}
+        try {
+            return con != null && !con.isClosed();
+        } catch (SQLException ignored) {
+        }
 
-    return false;
-}
-    
+        return false;
+    }
+
     /**
      * @param args the command line arguments
      */

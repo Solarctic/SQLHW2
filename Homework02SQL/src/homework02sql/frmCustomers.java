@@ -18,56 +18,58 @@ public class frmCustomers extends javax.swing.JFrame {
     /**
      * Creates new form frmCustomers
      */
-    
     Connection con = null;
-    
+
     public frmCustomers(Connection sqlpass) {
         initComponents();
-     
         con = sqlpass;
-       
+
         boolean check = isDbConnected(con);
         System.out.println(check);
-        
-        if(!check)
-        {
+        if (!check) {
             JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
             return;
         }
-        
+
+        getCustomer(con);
+    }
+
+    private void getCustomer(Connection con) {
+
         DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
-        try
-        {
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers;");
-        
-        while (rs.next())
-        {
-            String id = rs.getString("customer_id");
-            String first_Name = rs.getString("customer_first_name");  
-            String last_Name = rs.getString("customer_last_name");
-            String address = rs.getString("customer_address");
-            String city = rs.getString("customer_city");
-            String state = rs.getString("customer_state");
-            String zip = rs.getString("customer_zip");
-            String phone = rs.getString("customer_phone");
-            String fax = rs.getString("customer_fax");
-            tableModel.addRow(new Object[]{id, first_Name, last_Name,
-             address, city, state, zip, phone, fax});        
-        }
-        }
-        catch(Exception e){
+        try {
+            Statement stmt = con.createStatement();
+            //change name of schema for your datbase
+            ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers;");
+
+            while (rs.next()) {
+                String id = rs.getString("customer_id");
+                String first_Name = rs.getString("customer_first_name");
+                String last_Name = rs.getString("customer_last_name");
+                String address = rs.getString("customer_address");
+                String city = rs.getString("customer_city");
+                String state = rs.getString("customer_state");
+                String zip = rs.getString("customer_zip");
+                String phone = rs.getString("customer_phone");
+                String fax = rs.getString("customer_fax");
+                //add to table
+                tableModel.addRow(new Object[]{id, first_Name, last_Name,
+                    address, city, state, zip, phone, fax});
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error in retrieving the data table");
         }
     }
-    
-        public boolean isDbConnected(Connection con) {
-    try {
-        return con != null && !con.isClosed();
-    } catch (SQLException ignored) {}
 
-    return false;
-}
+    public boolean isDbConnected(Connection con) {
+        try {
+            return con != null && !con.isClosed();
+        } catch (SQLException ignored) {
+        }
+
+        return false;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +83,7 @@ public class frmCustomers extends javax.swing.JFrame {
         tblCustomers = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Database - Customer Table");
 
         tblCustomers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,10 +117,9 @@ public class frmCustomers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * @param args the command line arguments **/
-    
-        //code from internet modified to check connection just in case it doesnt pass
-    
+     * @param args the command line arguments *
+     */
+    //code from internet modified to check connection just in case it doesnt pass
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -144,8 +146,7 @@ public class frmCustomers extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() 
-            {
+            public void run() {
             }
         });
     }

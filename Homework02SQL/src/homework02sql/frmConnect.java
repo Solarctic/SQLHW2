@@ -41,6 +41,7 @@ public class frmConnect extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Form");
 
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,49 +114,47 @@ public class frmConnect extends javax.swing.JFrame {
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         // TODO add your handling code here:
-        
+
         String user = txtUsername.getText();
         String password = txtPassword.getText();
-        
-        if (user.equals("") || user.isEmpty())
-        {
+
+        if (user.equals("") || user.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Invalid Username");
             return;
         }
-        
-        if (password.equals("") || password.isEmpty())
-        {
+
+        if (password.equals("") || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Invalid Password");
             return;
         }
-        
+
+        //test connection   return error mesg if not possible to connect
         frmConnect pro = new frmConnect();
-                //test connection   return error mesg if not possible to connect
-        pro.createConnection(user, password);
-        // HOW TO HIDE THIS FORRRRRMM
-        pro.setVisible(false);
-  
+        pro.createConnection(user, password, pro);
+//        // HOW TO HIDE THIS FORRRRRMM
+//        pro.setVisible(false);
+
     }//GEN-LAST:event_btnConnectActionPerformed
-           
-        void createConnection(String username, String password)
-        {
-            //important to create connection
-            try{
-                //Class.forName("com.mysql.cj.jdbc.Drive");
-                //change for admin and root users
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", username, password);
-                JOptionPane.showMessageDialog(null, "SQL Connected Successfully");
-                System.out.println("Connection successful");
-                //how to hide the form? close it?
-                new frmMain(con).setVisible(true);
-                
-            } catch (SQLException ex) {                        
+
+    void createConnection(String username, String password, frmConnect pro) {
+        //important to create connection
+        try {
+            //Class.forName("com.mysql.cj.jdbc.Drive");
+            //change for admin and root users
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", username, password);
+            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "SQL Connected Successfully");
+            System.out.println("Connection successful");
+            //how to hide the form? close it?
+            new frmMain(con, pro).setVisible(true);
+
+        } catch (SQLException ex) {
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "SQL Connection Failed");
             return;
-            }    
         }
-    
+    }
+
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
