@@ -22,7 +22,8 @@ public class frmMain extends javax.swing.JFrame {
     
     Connection con = null;
     
-    public frmMain(Connection sqlcon) {
+    public frmMain(Connection sqlcon) { 
+
         initComponents();
         con = sqlcon;
         //sql checker see if the connection is passed properly

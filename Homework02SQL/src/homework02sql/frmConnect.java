@@ -130,9 +130,11 @@ public class frmConnect extends javax.swing.JFrame {
         }
         
         frmConnect pro = new frmConnect();
-        
+                //test connection   return error mesg if not possible to connect
         pro.createConnection(user, password);
-        //test connection     
+        // HOW TO HIDE THIS FORRRRRMM
+        pro.setVisible(false);
+  
     }//GEN-LAST:event_btnConnectActionPerformed
            
         void createConnection(String username, String password)
@@ -142,12 +144,10 @@ public class frmConnect extends javax.swing.JFrame {
                 //Class.forName("com.mysql.cj.jdbc.Drive");
                 //change for admin and root users
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", username, password);
-                JOptionPane.showMessageDialog(null, "SQL Connected");
+                JOptionPane.showMessageDialog(null, "SQL Connected Successfully");
                 System.out.println("Connection successful");
-               
-                this.setVisible(false); //check how to disappear this
+                //how to hide the form? close it?
                 new frmMain(con).setVisible(true);
-                
                 
             } catch (SQLException ex) {                        
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
