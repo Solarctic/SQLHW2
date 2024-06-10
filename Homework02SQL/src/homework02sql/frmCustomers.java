@@ -4,6 +4,11 @@
  */
 package homework02sql;
 
+import java.sql.*;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author SOL
@@ -13,10 +18,56 @@ public class frmCustomers extends javax.swing.JFrame {
     /**
      * Creates new form frmCustomers
      */
-    public frmCustomers() {
+    
+    Connection con = null;
+    
+    public frmCustomers(Connection sqlpass) {
         initComponents();
+     
+        con = sqlpass;
+       
+        boolean check = isDbConnected(con);
+        System.out.println(check);
+        
+        if(!check)
+        {
+            JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
+            return;
+        }
+        
+        DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
+        try
+        {
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers;");
+        
+        while (rs.next())
+        {
+            String id = rs.getString("customer_id");
+            String first_Name = rs.getString("customer_first_name");  
+            String last_Name = rs.getString("customer_last_name");
+            String address = rs.getString("customer_address");
+            String city = rs.getString("customer_city");
+            String state = rs.getString("customer_state");
+            String zip = rs.getString("customer_zip");
+            String phone = rs.getString("customer_phone");
+            String fax = rs.getString("customer_fax");
+            tableModel.addRow(new Object[]{id, first_Name, last_Name,
+             address, city, state, zip, phone, fax});        
+        }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error in retrieving the data table");
+        }
     }
+    
+        public boolean isDbConnected(Connection con) {
+    try {
+        return con != null && !con.isClosed();
+    } catch (SQLException ignored) {}
 
+    return false;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,47 +78,46 @@ public class frmCustomers extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCustomers = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 500));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "customer_id", "customer_first_name", "customer_last_name", "customer_address", "customer_city", "customer_state", "customer_zip", "customer_phone", "customer_fax"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCustomers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1124, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * @param args the command line arguments
-     */
+     * @param args the command line arguments **/
+    
+        //code from internet modified to check connection just in case it doesnt pass
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -94,14 +144,14 @@ public class frmCustomers extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmCustomers().setVisible(true);
+            public void run() 
+            {
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCustomers;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,17 +4,30 @@
  */
 package homework02sql;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author SOL
  */
+
+
 public class frmMain extends javax.swing.JFrame {
 
     /**
      * Creates new form frmMain
      */
-    public frmMain() {
+    
+    Connection con = null;
+    
+    public frmMain(Connection sqlcon) {
         initComponents();
+        con = sqlcon;
+        //sql checker see if the connection is passed properly
+        boolean check = isDbConnected(con);
+        System.out.println(check);
     }
 
     /**
@@ -55,14 +68,31 @@ public class frmMain extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersActionPerformed
         // TODO add your handling code here:
+        boolean check = isDbConnected(con);
         
-        new frmCustomers().setVisible(true);
+        if(!check)
+        {
+            JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
+            return;
+        }
+        new frmCustomers(con).setVisible(true);
     }//GEN-LAST:event_btnCustomersActionPerformed
 
+    
+    //code from internet modified to check connection just in case it doesnt pass
+    public boolean isDbConnected(Connection con) {
+    try {
+        return con != null && !con.isClosed();
+    } catch (SQLException ignored) {}
+
+    return false;
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -93,7 +123,6 @@ public class frmMain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmMain().setVisible(true);
             }
         });
     }

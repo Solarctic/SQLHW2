@@ -60,6 +60,11 @@ public class frmConnect extends javax.swing.JFrame {
         });
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +108,7 @@ public class frmConnect extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
@@ -138,7 +144,11 @@ public class frmConnect extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", username, password);
                 JOptionPane.showMessageDialog(null, "SQL Connected");
                 System.out.println("Connection successful");
-                new frmMain().setVisible(true);
+               
+                this.setVisible(false); //check how to disappear this
+                new frmMain(con).setVisible(true);
+                
+                
             } catch (SQLException ex) {                        
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "SQL Connection Failed");
@@ -149,6 +159,11 @@ public class frmConnect extends javax.swing.JFrame {
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
