@@ -42,6 +42,7 @@ public class frmConnect extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login Form");
+        setResizable(false);
 
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,13 +131,13 @@ public class frmConnect extends javax.swing.JFrame {
 
         //test connection   return error mesg if not possible to connect
         frmConnect pro = new frmConnect();
-        pro.createConnection(user, password, pro);
-//        // HOW TO HIDE THIS FORRRRRMM
-//        pro.setVisible(false);
+        if (pro.createConnection(user, password)) {
+            this.dispose();
+        }
 
     }//GEN-LAST:event_btnConnectActionPerformed
 
-    void createConnection(String username, String password, frmConnect pro) {
+    boolean createConnection(String username, String password) {
         //important to create connection
         try {
             //Class.forName("com.mysql.cj.jdbc.Drive");
@@ -145,14 +146,13 @@ public class frmConnect extends javax.swing.JFrame {
             this.setVisible(false);
             JOptionPane.showMessageDialog(null, "SQL Connected Successfully");
             System.out.println("Connection successful");
-            //how to hide the form? close it?
             new frmMain(con).setVisible(true);
-
         } catch (SQLException ex) {
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "SQL Connection Failed");
-            return;
+            return false;
         }
+        return true;
     }
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed

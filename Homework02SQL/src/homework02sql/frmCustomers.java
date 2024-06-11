@@ -31,8 +31,10 @@ public class frmCustomers extends javax.swing.JFrame {
             return;
         }
 
-        //getCustomer(con);
-        
+        getCustomer(con);
+    }
+
+    private void getCustomer(Connection con) {
         DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
         try {
             Statement stmt = con.createStatement();
@@ -53,7 +55,7 @@ public class frmCustomers extends javax.swing.JFrame {
                 //add to table
                 tableModel.addRow(new Object[]{id, first_Name, last_Name,
                     address, city, state, zip, phone, fax});
-                
+
             }
             //close statement on completion
             stmt.close();
@@ -61,14 +63,8 @@ public class frmCustomers extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: cannot retrieve the data table");
             return;
         }
-        
-        
     }
 
-//    private void getCustomer(Connection con) {
-//
-//    }
-    
     //see frmMain for details
     public boolean isDbConnected(Connection con) {
         try {
@@ -93,6 +89,7 @@ public class frmCustomers extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Database - Customer Table");
+        setResizable(false);
 
         tblCustomers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
