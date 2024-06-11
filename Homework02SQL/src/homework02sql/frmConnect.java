@@ -146,7 +146,7 @@ public class frmConnect extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "SQL Connected Successfully");
             System.out.println("Connection successful");
             //how to hide the form? close it?
-            new frmMain(con, pro).setVisible(true);
+            new frmMain(con).setVisible(true);
 
         } catch (SQLException ex) {
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);

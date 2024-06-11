@@ -31,16 +31,13 @@ public class frmCustomers extends javax.swing.JFrame {
             return;
         }
 
-        getCustomer(con);
-    }
-
-    private void getCustomer(Connection con) {
-
+        //getCustomer(con);
+        
         DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
         try {
             Statement stmt = con.createStatement();
             //change name of schema for your datbase,
-            ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers");
 
             while (rs.next()) {
                 //fetch data from sql datatable
@@ -56,21 +53,29 @@ public class frmCustomers extends javax.swing.JFrame {
                 //add to table
                 tableModel.addRow(new Object[]{id, first_Name, last_Name,
                     address, city, state, zip, phone, fax});
-                //close statement on completion
-                stmt.close();
+                
             }
+            //close statement on completion
+            stmt.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: cannot retrieve the data table");
+            return;
         }
+        
+        
     }
+
+//    private void getCustomer(Connection con) {
+//
+//    }
     
     //see frmMain for details
     public boolean isDbConnected(Connection con) {
         try {
             return con != null && !con.isClosed();
         } catch (SQLException ignored) {
+            System.out.println("sql failed to connect");
         }
-
         return false;
     }
 
@@ -110,10 +115,10 @@ public class frmCustomers extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         pack();

@@ -19,7 +19,7 @@ public class frmMain extends javax.swing.JFrame {
      */
     Connection con = null;
 
-    public frmMain(Connection sqlcon, frmConnect pro) {
+    public frmMain(Connection sqlcon) {
 
         initComponents();
         con = sqlcon;
