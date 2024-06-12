@@ -132,6 +132,7 @@ public class frmConnect extends javax.swing.JFrame {
         //test connection   return error mesg if not possible to connect
         frmConnect pro = new frmConnect();
         if (pro.createConnection(user, password)) {
+            //dispose of current form to open frmMain if successful
             this.dispose();
         }
 
@@ -141,7 +142,7 @@ public class frmConnect extends javax.swing.JFrame {
         //important to create connection
         try {
             //Class.forName("com.mysql.cj.jdbc.Drive");
-            //change for admin and root users
+            //change localhost schema to import table * (for admin and root users)
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", username, password);
             this.setVisible(false);
             JOptionPane.showMessageDialog(null, "SQL Connected Successfully");

@@ -16,6 +16,9 @@ public class Homework02SQL {
     /**
      * @param args the command line arguments
      */
+    
+                //test file does not actuall do anything but open frmConnect
+                //important stuff will be added here
     public static void main(String[] args) {
         // TODO code application logic here
         Homework02SQL pro = new Homework02SQL();
@@ -30,7 +33,7 @@ public class Homework02SQL {
             //Class.forName("com.mysql.cj.jdbc.Drive");
             //change for admin and root users
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/new_schema", "root", "123456");
-            System.out.println("Connection successful");
+            //System.out.println("Connection successful");
         } catch (SQLException ex) {
             Logger.getLogger(Homework02SQL.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -25,12 +25,12 @@ public class frmCustomers extends javax.swing.JFrame {
         con = sqlpass;
 
         boolean check = isDbConnected(con);
-        System.out.println(check);
+        //System.out.println(check);
         if (!check) {
             JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
             return;
         }
-
+        //call method to import table
         getCustomer(con);
     }
 
@@ -38,7 +38,8 @@ public class frmCustomers extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) tblCustomers.getModel();
         try {
             Statement stmt = con.createStatement();
-            //change name of schema for your datbase,
+            //change name of schema for your datbase
+            //sql query to import table
             ResultSet rs = stmt.executeQuery("SELECT * FROM new_schema.customers");
 
             while (rs.next()) {
@@ -70,7 +71,7 @@ public class frmCustomers extends javax.swing.JFrame {
         try {
             return con != null && !con.isClosed();
         } catch (SQLException ignored) {
-            System.out.println("sql failed to connect");
+            //System.out.println("sql failed to connect");
         }
         return false;
     }

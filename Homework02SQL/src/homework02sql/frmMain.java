@@ -23,10 +23,9 @@ public class frmMain extends javax.swing.JFrame {
 
         initComponents();
         con = sqlcon;
-        //pro.setVisible(false);
         //sql checker see if the connection is passed properly
         boolean check = isDbConnected(con);
-        System.out.println(check);
+        //System.out.println(check);
     }
 
     /**
@@ -74,7 +73,6 @@ public class frmMain extends javax.swing.JFrame {
     private void btnCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersActionPerformed
         // TODO add your handling code here:
         boolean check = isDbConnected(con);
-
         if (!check) {
             JOptionPane.showMessageDialog(null, "SQL Connection Failed or Interrupted.");
             return;
@@ -82,7 +80,7 @@ public class frmMain extends javax.swing.JFrame {
         new frmCustomers(con).setVisible(true);
     }//GEN-LAST:event_btnCustomersActionPerformed
 
-    //code from internet modified to check connection just in case it doesnt pass
+    //method i found that i modified to check connection just in case the object doesnt pass
     public boolean isDbConnected(Connection con) {
         try {
             return con != null && !con.isClosed();
